@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package cmdrunner;
+
+service Runner {
+  rpc RunCommand (RunRequest) returns (CommandReply) {}
+  rpc RunCommandOneByOne(stream RunRequest) returns (stream CommandReply) {}
+}
+
+message RunRequest {
+  string command = 1;
+  repeated string args = 2;
+}
+
+message CommandReply {
+  bytes data = 1;
+  string message = 2;
+}

@@ -1,0 +1,5 @@
+{
+    "directory_name": "my_service",
+    "file_name": "app",
+    "service_name": "grpc"
+}
