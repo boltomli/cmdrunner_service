@@ -21,18 +21,18 @@ service_name = "cmdrunner.Runner"
 
 
 # implement the command to run
-def run_command(command, args):
+def run_command(command, args=None):
+    if args is None:
+        args = []
     message = (f"Run {command} with {args}")
-    return {"data": b64encode(message), "message": message}
+    return {"data": b64encode(message.encode("utf-8")), "message": message}
 
 
 # unary-unary method
 @app.method(service_name)
-async def RunCommand(request, **kwargs):
-    if "command" not in request:
+async def RunCommand(command, args, **kwargs):
+    if not command:
         return {}
-    command = request["command"]
-    args = request["args"] if "args" in request else []
     return run_command(command, args)
 
 
@@ -43,7 +43,7 @@ async def RunCommandOneByOne(request_iterator, context):
         if "command" not in request:
             yield {}
         command = request["command"]
-        args = request["args"] if "args" in request else []
+        args = request["args"] if "args" in request else None
         yield run_command(command, args)
 
 
