@@ -16,6 +16,7 @@ do
 done
 
 homi run {{cookiecutter.file_name}}_grpc.py -p ${grpc} -w ${worker} &
+uvicorn {{cookiecutter.file_name}}_http:app --host=0.0.0.0 --port=${http} --workers=${worker} &
 
 wait -n
 exit $?

@@ -1,1 +1,3 @@
+fastapi
 homi
+uvicorn[standard]
